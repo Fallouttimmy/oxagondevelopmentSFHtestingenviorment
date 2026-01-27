@@ -4,7 +4,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const publicPath = path.join(__dirname, '..', 'dist', 'public');
+const publicPath = path.join(__dirname, '..', '..', 'dist', 'public');
 
 export default (req: VercelRequest, res: VercelResponse) => {
   const filePath = path.join(publicPath, req.url || '/');
