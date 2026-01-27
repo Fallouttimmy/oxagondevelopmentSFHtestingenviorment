@@ -399,7 +399,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
 
     // GET /api/categories
     if (method === 'GET' && pathname === '/api/categories') {
-      return res.json(categories);
+      return res.status(200).json(categories);
     }
 
     // GET /api/categories/:slug
@@ -410,13 +410,13 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         res.status(404);
         return res.json({ error: 'Category not found' });
       }
-      return res.json(category);
+      return res.status(200).json(category);
     }
 
     // GET /api/helplines/featured
     if (method === 'GET' && pathname === '/api/helplines/featured') {
       const featured = helplines.filter((h) => h.isFeatured);
-      return res.json(featured);
+      return res.status(200).json(featured);
     }
 
     // GET /api/helplines/search/:query
@@ -429,7 +429,7 @@ export default async (req: VercelRequest, res: VercelResponse) => {
           h.description.toLowerCase().includes(query) ||
           (h.phone && h.phone.includes(query))
       );
-      return res.json(results);
+      return res.status(200).json(results);
     }
 
     // GET /api/helplines/category/:slug
@@ -441,21 +441,21 @@ export default async (req: VercelRequest, res: VercelResponse) => {
         return res.json({ error: 'Category not found' });
       }
       const categoryHelplines = helplines.filter((h) => h.categoryId === category.id);
-      return res.json(categoryHelplines);
+      return res.status(200).json(categoryHelplines);
     }
 
     // GET /api/helplines
     if (method === 'GET' && pathname === '/api/helplines') {
-      return res.json(helplines);
+      return res.status(200).json(helplines);
     }
 
     // Route not found
     res.status(404);
     return res.json({ error: 'Not Found' });
   } catch (error: any) {
-    // @ts-ignore - console not recognized when lib doesn't include DOM
-    console.error('API Error:', error?.message || String(error));
+    // @ts-ignore
+    console.error('API Error:', error?.message || String(error), 'Path:', pathname);
     res.status(500);
-    return res.json({ error: 'Internal Server Error' });
+    return res.json({ error: 'Internal Server Error', details: error?.message || 'Unknown error' });
   }
 };
