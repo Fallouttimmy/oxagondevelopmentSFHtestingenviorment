@@ -1,5 +1,6 @@
-// @ts-ignore - @vercel/node types not fully available in serverless context
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+// Handle all API routes directly - use any types to avoid import issues
+type VercelRequest = any;
+type VercelResponse = any;
 
 // Inline category data
 const categories = [
