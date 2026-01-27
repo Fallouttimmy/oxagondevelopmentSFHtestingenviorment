@@ -6,7 +6,13 @@
     "skipLibCheck": true,
     "noImplicitAny": false,
     "strict": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "..",
+    "paths": {
+      "@shared/*": ["./shared/*"],
+      "@/*": ["./client/src/*"]
+    }
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }
