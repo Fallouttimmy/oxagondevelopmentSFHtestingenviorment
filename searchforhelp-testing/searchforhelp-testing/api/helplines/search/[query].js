@@ -1,7 +1,7 @@
-// All Helplines API endpoint
+// Helplines Search API endpoint
 
-type Req = any;
-type Res = any;
+
+
 
 const helplines = [
   {
@@ -331,6 +331,22 @@ const helplines = [
   },
 ];
 
-export default function handler(req: Req, res: Res) {
-  res.status(200).json(helplines);
+export default function handler(req, res) {
+  const query = req.query.query as string;
+  
+  if (!query) {
+    return res.status(400).json({ error: "Query parameter required" });
+  }
+  
+  const searchTerm = query.toLowerCase();
+  const filtered = helplines.filter((h) => {
+    return (
+      h.name.toLowerCase().includes(searchTerm) ||
+      h.description.toLowerCase().includes(searchTerm) ||
+      h.descriptionNl.toLowerCase().includes(searchTerm) ||
+      (h.phone && h.phone.includes(query))
+    );
+  });
+  
+  res.status(200).json(filtered);
 }

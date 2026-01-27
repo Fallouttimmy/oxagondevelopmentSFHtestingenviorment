@@ -1,8 +1,4 @@
-// Category Detail API endpoint
-
-type Req = any;
-type Res = any;
-
+// Categories API endpoint
 const categories = [
   {
     id: "mental-health",
@@ -78,13 +74,6 @@ const categories = [
   },
 ];
 
-export default function handler(req: Req, res: Res) {
-  const slug = req.query.slug;
-  const category = categories.find((c) => c.slug === slug);
-  
-  if (!category) {
-    return res.status(404).json({ error: "Category not found" });
-  }
-  
-  res.status(200).json(category);
+export default function handler(req, res) {
+  res.status(200).json(categories);
 }

@@ -1,7 +1,7 @@
 // Helplines by Category API endpoint
 
-type Req = any;
-type Res = any;
+
+
 
 const helplines = [
   {
@@ -331,7 +331,7 @@ const helplines = [
   },
 ];
 
-export default function handler(req: Req, res: Res) {
+export default function handler(req, res) {
   const slug = req.query.slug;
   const filtered = helplines.filter((h) => {
     // Map category slugs to category IDs
