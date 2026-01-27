@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// @ts-ignore - Module resolution issue in Vercel build
-import { storage } from '../server/storage';
+// Import storage directly
+const storage = require('../server/storage').storage;
 
 // Handle all API routes directly
 export default async (req: VercelRequest, res: VercelResponse) => {
@@ -63,9 +63,9 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     // Route not found
     res.status(404);
     return res.json({ error: 'Not Found' });
-  } catch (error) {
-    console.error('API Error:', error);
+  } catch (error: any) {
+    console.error('API Error:', error?.message || String(error));
     res.status(500);
-    return res.json({ error: 'Internal Server Error', details: String(error) });
+    return res.json({ error: 'Internal Server Error' });
   }
 };

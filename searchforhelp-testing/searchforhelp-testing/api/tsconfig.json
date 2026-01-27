@@ -1,11 +1,14 @@
 {
-  "extends": "../tsconfig.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": ["esnext"],
-    "types": ["node", "@vercel/node"],
-    "skipLibCheck": true,
-    "noImplicitAny": false,
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "baseUrl": "..",
     "paths": {
@@ -13,6 +16,6 @@
       "@/*": ["./client/src/*"]
     }
   },
-  "include": ["**/*.ts"],
+  "include": ["[[...route]].ts"],
   "exclude": ["node_modules"]
 }
