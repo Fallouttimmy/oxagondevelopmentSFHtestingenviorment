@@ -1,84 +1,67 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import express, { type Request, Response, NextFunction } from 'express';
 
 // @ts-ignore - Module resolution issue in Vercel build
-import { registerRoutes } from '../server/routes.js';
+import { storage } from '../server/storage';
 
-const app = express();
-
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-// Logging middleware
-function log(message: string, source = 'express') {
-  const formattedTime = new Date().toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  });
-
-  console.log(`${formattedTime} [${source}] ${message}`);
-}
-
-app.use((req, res, next) => {
-  const start = Date.now();
-  const pathname = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
-  res.on('finish', () => {
-    const duration = Date.now() - start;
-    if (pathname.startsWith('/api')) {
-      let logLine = `${req.method} ${pathname} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-      log(logLine);
-    }
-  });
-
-  next();
-});
-
-// Initialize routes
-let initialized = false;
-const initializeRoutes = async () => {
-  if (initialized) return;
-  
-  try {
-    await registerRoutes(null as any, app);
-    initialized = true;
-  } catch (error) {
-    console.error('Failed to initialize routes:', error);
-  }
-};
-
-// Error handling middleware
-app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-  const status = err.status || err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
-
-  console.error('API Error:', err);
-  res.status(status).json({ message });
-});
-
-// Export for Vercel - handles /api routes
+// Handle all API routes directly
 export default async (req: VercelRequest, res: VercelResponse) => {
-  // Initialize routes once
-  await initializeRoutes();
-  
-  // Return 404 for non-API routes (these are handled by api/index.ts)
-  if (!req.url?.startsWith('/api')) {
-    return res.status(404).json({ error: 'Not Found' });
-  }
+  const url = req.url || '/';
+  const method = req.method || 'GET';
 
-  // Handle API requests
-  return app(req, res);
+  try {
+    // Parse the URL to get the path and params
+    const urlParts = url.split('?')[0].split('/').filter(Boolean);
+
+    // GET /api/categories
+    if (method === 'GET' && url === '/api/categories') {
+      const categories = await storage.getCategories();
+      return res.json(categories);
+    }
+
+    // GET /api/categories/:slug
+    if (method === 'GET' && urlParts[1] === 'categories' && urlParts.length === 3) {
+      const slug = urlParts[2];
+      const category = await storage.getCategoryBySlug(slug);
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      return res.json(category);
+    }
+
+    // GET /api/helplines
+    if (method === 'GET' && url === '/api/helplines') {
+      const helplines = await storage.getHelplines();
+      return res.json(helplines);
+    }
+
+    // GET /api/helplines/featured
+    if (method === 'GET' && url === '/api/helplines/featured') {
+      const helplines = await storage.getFeaturedHelplines();
+      return res.json(helplines);
+    }
+
+    // GET /api/helplines/search/:query
+    if (method === 'GET' && urlParts[1] === 'helplines' && urlParts[2] === 'search' && urlParts.length === 4) {
+      const query = decodeURIComponent(urlParts[3]);
+      const helplines = await storage.searchHelplines(query);
+      return res.json(helplines);
+    }
+
+    // GET /api/helplines/category/:slug
+    if (method === 'GET' && urlParts[1] === 'helplines' && urlParts[2] === 'category' && urlParts.length === 4) {
+      const slug = urlParts[3];
+      const category = await storage.getCategoryBySlug(slug);
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+      const helplines = await storage.getHelplinesByCategory(category.id);
+      return res.json(helplines);
+    }
+
+    // Route not found
+    res.status(404).json({ error: 'Not Found' });
+  } catch (error) {
+    console.error('API Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 };
