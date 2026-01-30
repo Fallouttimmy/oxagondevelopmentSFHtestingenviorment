@@ -332,7 +332,7 @@ const helplines = [
 ];
 
 export default function handler(req, res) {
-  const query = req.query.query as string;
+  const query = req.query.query;
   
   if (!query) {
     return res.status(400).json({ error: "Query parameter required" });
