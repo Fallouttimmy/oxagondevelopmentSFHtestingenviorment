@@ -2,6 +2,9 @@
   background-color: #c51a1a;
   color: white;
   padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 101;
 }
 
 .emergency-banner-content {
@@ -26,29 +29,8 @@
   height: 24px;
 }
 
-.emergency-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.emergency-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.emergency-btn .btn-icon {
-  width: 16px;
-  height: 16px;
+.emergency-link {
+  text-decoration: underline;
 }
 
 :root {
@@ -92,7 +74,7 @@ a {
   background: var(--background);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 0;
+  top: 56px; /* Adjusted for the sticky banner */
   z-index: 100;
 }
 
@@ -169,6 +151,10 @@ a {
 
   .mobile-menu-btn {
     display: flex;
+  }
+  
+  .header {
+    top: 68px; /* Adjusted for the sticky banner on mobile */
   }
 
   .emergency-banner-content {
@@ -807,35 +793,4 @@ a {
 
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
-}
-.emergency-banner {
-  background-color: #c51a1a;
-  color: white;
-  padding: 1rem;
-}
-
-.emergency-banner-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.emergency-prompt {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 500;
-}
-
-.emergency-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.emergency-link {
-  text-decoration: underline;
 }
