@@ -1,7 +1,7 @@
 .emergency-banner {
   background-color: #c51a1a;
   color: white;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   position: sticky;
   top: 0;
   z-index: 101;
@@ -74,7 +74,7 @@ a {
   background: var(--background);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 56px; /* Adjusted for the sticky banner */
+  top: 38px; /* Adjusted for the smaller banner */
   z-index: 100;
 }
 
@@ -154,7 +154,7 @@ a {
   }
   
   .header {
-    top: 68px; /* Adjusted for the sticky banner on mobile */
+    top: 52px; /* Adjusted for the sticky banner on mobile */
   }
 
   .emergency-banner-content {
