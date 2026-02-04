@@ -808,3 +808,30 @@ a {
 input[type="search"]::-webkit-search-cancel-button {
   display: none;
 }
+.emergency-banner {
+  background-color: #c51a1a;
+  color: white;
+  padding: 1rem;
+}
+
+.emergency-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.emergency-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.emergency-icon {
+  width: 24px;
+  height: 24px;
+}
