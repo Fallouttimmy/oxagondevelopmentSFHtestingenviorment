@@ -523,7 +523,7 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(2, 132, 199, 0.1);
+  background: rgba(2, 132, 199,.1);
   display: flex;
   align-items: center;
   justify-content: center;
