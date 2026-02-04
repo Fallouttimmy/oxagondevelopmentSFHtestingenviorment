@@ -1,3 +1,15 @@
+.emergency-banner {
+  background-color: var(--destructive);
+  color: var(--primary-foreground);
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.emergency-banner a {
+  color: var(--primary-foreground);
+  text-decoration: underline;
+}
 
 :root {
   --primary: #0284c7;
