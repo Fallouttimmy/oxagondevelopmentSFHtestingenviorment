@@ -75,7 +75,7 @@ a {
   background: var(--background);
   border-bottom: 1px solid var(--border);
   position: sticky;
-  top: 32px; /* Adjusted for the smaller banner */
+  top: 20px; /* Adjusted for the smaller banner */
   z-index: 100;
 }
 
