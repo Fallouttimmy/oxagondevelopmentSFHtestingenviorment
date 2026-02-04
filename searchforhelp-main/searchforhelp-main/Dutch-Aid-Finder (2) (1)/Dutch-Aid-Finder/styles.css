@@ -1,30 +1,54 @@
 .emergency-banner {
-  background-color: var(--destructive);
-  color: var(--primary-foreground);
-  text-align: center;
-  padding: 0.75rem;
+  background-color: #c51a1a;
+  color: white;
+  padding: 1rem;
+}
+
+.emergency-banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.emergency-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.emergency-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.emergency-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
-}
-
-.emergency-banner p {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
-
-.emergency-banner a.emergency-banner-btn {
-  color: var(--primary-foreground);
-  text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.15);
-  padding: 0.375rem 0.75rem;
+  font-weight: 500;
   border-radius: var(--radius);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: none;
+  cursor: pointer;
   transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.emergency-banner a.emergency-banner-btn:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+.emergency-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.emergency-btn .btn-icon {
+  width: 16px;
+  height: 16px;
 }
 
 :root {
@@ -145,6 +169,11 @@ a {
 
   .mobile-menu-btn {
     display: flex;
+  }
+
+  .emergency-banner-content {
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 
